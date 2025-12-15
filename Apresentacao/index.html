@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Imobiliário, Vendas e MCMV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; overflow: hidden; background: #000; }
+        .slide { 
+            width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; 
+            position: absolute; opacity: 0; transition: opacity 0.5s; background: #fff;
+        }
+        .slide.active { opacity: 1; z-index: 10; }
+        .title { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .dark-blue { background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%); color: white; }
+        .green { background: #10B981; color: white; }
+        .white-box { background: rgba(255,255,255,0.95); border-radius: 15px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .card { background: white; border-radius: 15px; padding: 25px; margin: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; flex: 1; }
+        .icon { font-size: 4em; color: #10B981; margin-bottom: 20px; }
+        .nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; }
+        .nav-btn { background: #1E3A8A; color: white; border: none; padding: 15px 25px; margin: 0 10px; border-radius: 50px; cursor: pointer; font-size: 18px; font-weight: 600; }
+        .nav-btn:hover { background: #10B981; }
+        .fade-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: -1; }
+        h1 { font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 20px; }
+        h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 30px; }
+        ul { list-style: none; font-size: clamp(1.2rem, 3vw, 1.8rem); line-height: 1.6; }
+        li { margin: 15px 0; padding-left: 40px; position: relative; }
+        li::before { content: '✓'; color: #10B981; font-weight: bold; font-size: 1.5em; position: absolute; left: 0; }
+        .split { display: flex; width: 100%; height: 70vh; gap: 20px; }
+        .half { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .flow { display: flex; width: 80%; justify-content: space-between; align-items: center; }
+        .flow-item { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
+        .flow-item:not(:last-child)::after { content: ''; position: absolute; right: -30px; top: 50%; transform: translateY(-50%); width: 60px; height: 4px; background: #10B981; }
+        .funnel { width: 300px; height: 500px; margin: 0 auto; position: relative; }
+        .funnel-stage { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; font-size: 1.5rem; font-weight: 600; }
+        .timeline { display: flex; justify-content: space-between; width: 80%; margin: 0 auto; }
+        .timeline-item { text-align: center; flex: 1; }
+        @media (max-width: 768px) { .split, .flow { flex-direction: column; gap: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <button class="nav-btn" onclick="prevSlide()">‹ Anterior</button>
+        <button class="nav-btn" onclick="nextSlide()">Próximo ›</button>
+    </div>
+
+    <!-- Slide 1: Capa -->
+    <div class="slide active">
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="fade-img" alt="Cidade">
+        <div class="white-box" style="text-align: center;">
+            <h1 class="title">Mercado Imobiliário,<br>Vendas e MCMV</h1>
+            <h2>Panorama, Tendências e Estratégias</h2>
+            <p style="font-size: 1.5rem;">Diêgo Almeida</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Panorama -->
+    <div class="slide">
+        <div style="display: flex; width: 90%; max-width: 1200px; align-items: center;">
+            <i class="fas fa-chart-line icon" style="font-size: 8rem;"></i>
+            <div style="flex: 1; padding-left: 40px;">
+                <h2 style="color: #1E3A8A;">Panorama do Mercado<br>Imobiliário</h2>
+                <ul style="color: #1E3A8A;">
+                    <li>Setor estratégico da economia</li>
+                    <li>Alta demanda por moradia</li>
+                    <li>Mercado em constante adaptação</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Tendências -->
+    <div class="slide">
+        <div style="display: flex; width: 90%; max-width: 1200px; gap: 30px;">
+            <div class="card">
+                <i class="fas fa-laptop icon"></i>
+                <h3>Digitalização</h3>
+            </div>
+            <div class="card">
+                <i class="fas fa-credit-card icon"></i>
+                <h3>Crédito facilitado</h3>
+            </div>
+            <div class="card">
+                <i class="fas fa-home icon"></i>
+                <h3>Programas habitacionais</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Novo Perfil -->
+    <div class="slide">
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="fade-img" alt="Pessoa celular">
+        <div class="white-box" style="width: 60%;">
+            <h2 style="color: #1E3A8A;">Novo Perfil do Cliente</h2>
+            <ul style="color: #1E3A8A;">
+                <li>Mais informado</li>
+                <li>Conectado</li>
+                <li>Exigente</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 5: Corretor x Consultor -->
+    <div class="slide">
+        <div class="split">
+            <div class="half dark-blue">
+                <h3 style="margin-bottom: 30px;">CORRETOR</h3>
+                <ul style="font-size: 1.4rem;">
+                    <li><strong>Produto</strong></li>
+                    <li><strong>Venda</strong></li>
+                </ul>
+            </div>
+            <div class="half green">
+                <h3 style="margin-bottom: 30px;">CONSULTOR</h3>
+                <ul style="font-size: 1.4rem;">
+                    <li><strong>Solução</strong></li>
+                    <li><strong>Relacionamento</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Venda Consultiva -->
+    <div class="slide">
+        <h2 style="color: #1E3A8A; margin-bottom: 50px; text-align: center;">Venda Consultiva</h2>
+        <div class="flow">
+            <div class="flow-item">
+                <i class="fas fa-stethoscope icon" style="color: #1E3A8A;"></i>
+                <h3>Diagnóstico</h3>
+            </div>
+            <div class="flow-item">
+                <i class="fas fa-compass icon" style="color: #1E3A8A;"></i>
+                <h3>Orientação</h3>
+            </div>
+            <div class="flow-item">
+                <i class="fas fa-check-circle icon" style="color: #10B981;"></i>
+                <h3>Decisão segura</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: MCMV Visão Geral -->
+    <div class="slide dark-blue" style="text-align: center;">
+        <i class="fas fa-home icon" style="font-size: 10rem; color: #10B981;"></i>
+        <div class="white-box" style="width: 60%;">
+            <h2>Minha Casa Minha Vida</h2>
+            <h3 style="color: #1E3A8A; margin-bottom: 30px;">Visão Geral</h3>
+            <ul style="color: #1E3A8A;">
+                <li>Programa habitacional</li>
+                <li>Inclusão social</li>
+                <li>Benefícios financeiros</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 8: Público MCMV -->
+    <div class="slide" style="flex-direction: column; justify-content: center; gap: 30px;">
+        <h2 style="color: #1E3A8A;">Público do MCMV</h2>
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+            <div class="card" style="width: 250px;">
+                <i class="fas fa-home icon"></i>
+                <h3>Primeiro imóvel</h3>
+            </div>
+            <div class="card" style="width: 250px;">
+                <i class="fas fa-users icon"></i>
+                <h3>Renda baixa e média</h3>
+            </div>
+            <div class="card" style="width: 250px;">
+                <i class="fas fa-hand-holding-heart icon"></i>
+                <h3>Necessidade de orientação</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Papel do Consultor -->
+    <div class="slide">
+        <div class="white-box" style="width: 60%;">
+            <h2 style="color: #1E3A8A;">Papel do Consultor no MCMV</h2>
+            <ul style="color: #1E3A8A;">
+                <li>Orientar o cliente</li>
+                <li>Simplificar regras</li>
+                <li>Acompanhar todo o processo</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 10: Dores do Cliente -->
+    <div class="slide">
+        <div style="display: flex; width: 90%; max-width: 1000px; align-items: center;">
+            <div style="flex: 1;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 8rem; color: #ef4444;"></i>
+            </div>
+            <div style="flex: 1; padding-left: 40px;">
+                <h2 style="color: #1E3A8A;">Dores do Cliente</h2>
+                <ul style="color: #dc2626;">
+                    <li>Medo de reprovação</li>
+                    <li>Burocracia</li>
+                    <li>Falta de informação</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Estratégias -->
+    <div class="slide dark-blue" style="text-align: center;">
+        <h2 style="margin-bottom: 50px;">Estratégias de Vendas</h2>
+        <div style="width: 400px; height: 400px; margin: 0 auto; position: relative;">
+            <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 360px; height: 60px; background: #10B981; border-radius: 30px; display: flex; align-items: center; justify-content: space-around;">
+                <div><strong>Confiança</strong></div>
+                <div><strong>Clareza</strong></div>
+                <div><strong>Autoridade</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Funil -->
+    <div class="slide" style="background: linear-gradient(135deg, #1E3A8A 0%, #10B981 100%);">
+        <div style="text-align: center;">
+            <h2 style="color: white; margin-bottom: 50px;">Funil de Vendas Imobiliário</h2>
+            <div class="funnel">
+                <div style="top: 20px; width: 80px;">Lead</div>
+                <div style="top: 100px; width: 150px;">Qualificação</div>
+                <div style="top: 220px; width: 220px; color: #10B981;">Atendimento</div>
+                <div style="bottom: 20px; width: 300px; color: #10B981; font-size: 2rem;">Fechamento</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Marketing Digital -->
+    <div class="slide">
+        <h2 style="color: #1E3A8A; margin-bottom: 40px; text-align: center;">Marketing Digital Imobiliário</h2>
+        <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;">
+            <div><i class="fab fa-instagram" style="font-size: 6rem; color: #E4405F;"></i></div>
+            <div><i class="fab fa-whatsapp" style="font-size: 6rem; color: #25D366;"></i></div>
+            <div><i class="fas fa-bullhorn" style="font-size: 6rem; color: #10B981;"></i></div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Conteúdo Educativo -->
+    <div class="slide">
+        <h2 style="color: #1E3A8A; margin-bottom: 50px;">Conteúdo Educativo</h2>
+        <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
+            <div class="card" style="width: 250px;">
+                <i class="fas fa-book icon"></i>
+                <h3>Regras do MCMV</h3>
+            </div>
+            <div class="card" style="width: 250px;">
+                <i class="fas fa-calculator icon"></i>
+                <h3>Simulações</h3>
+            </div>
+            <div class="card" style="width: 250px;">
+                <i class="fas fa-lightbulb icon"></i>
+                <h3>Dicas práticas</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: Tecnologia -->
+    <div class="slide">
+        <div class="white-box" style="width: 60%; text-align: center;">
+            <i class="fas fa-database icon" style="color: #1E3A8A;"></i>
+            <h2 style="color: #1E3A8A;">Tecnologia nas Vendas</h2>
+            <ul style="color: #1E3A8A;">
+                <li>CRM imobiliário</li>
+                <li>Automação</li>
+                <li>Organização de leads</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 16: Atendimento -->
+    <div class="slide">
+        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="fade-img" alt="Atendimento">
+        <div class="white-box" style="width: 50%;">
+            <h2 style="color: #1E3A8A;">Atendimento de Alta Performance</h2>
+            <ul style="color: #1E3A8A;">
+                <li>Escuta ativa</li>
+                <li>Linguagem simples</li>
+                <li>Empatia</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 17: Negociação -->
+    <div class="slide green" style="text-align: center;">
+        <i class="fas fa-handshake icon" style="font-size: 10rem; color: white;"></i>
+        <div class="white-box" style="width: 50%;">
+            <h2 style="color: #1E3A8A;">Negociação</h2>
+            <ul style="color: #1E3A8A;">
+                <li>Transparência</li>
+                <li>Segurança</li>
+                <li>Confiança</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 18: Pós-Venda -->
+    <div class="slide">
+        <h2 style="color: #1E3A8A; margin-bottom: 50px; text-align: center;">Pós-Venda</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <i class="fas fa-eye icon" style="color: #10B981;"></i>
+                <h3>Acompanhamento</h3>
+            </div>
+            <div class="timeline-item">
+                <i class="fas fa-heart icon" style="color: #10B981;"></i>
+                <h3>Relacionamento</h3>
+            </div>
+            <div class="timeline-item">
+                <i class="fas fa-user-friends icon" style="color: #10B981;"></i>
+                <h3>Indicações</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 19: Futuro -->
+    <div class="slide">
+        <img src="https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="fade-img" alt="Futuro">
+        <div class="white-box" style="width: 60%;">
+            <h2 style="color: #1E3A8A;">Futuro do Mercado Imobiliário</h2>
+            <ul style="color: #1E3A8A;">
+                <li>Tecnologia</li>
+                <li>Profissionalização</li>
+                <li>Consultoria especializada</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 20: Encerramento -->
+    <div class="slide">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="fade-img" alt="Chave casa">
+        <div style="text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+            <h1 class="title" style="font-size: clamp(4rem, 10vw, 7rem); margin-bottom: 30px; color: #10B981 !important;">
+                Vender imóveis<br>é realizar sonhos
+            </h1>
+            <h2 style="font-size: 2rem; margin-bottom: 40px;">Obrigado!</h2>
+            <p style="font-size: 1.8rem; background: rgba(30,58,138,0.9); padding: 20px 40px; border-radius: 10px; display: inline-block;">
+                📞 (61) 9 9371-6011<br>👨‍💼 Consultor: Diêgo Almeida
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function prevSlide() { showSlide(currentSlide - 1); }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Auto-advance (opcional - comente se não quiser)
+        // setInterval(nextSlide, 8000);
+    </script>
+</body>
+</html>
